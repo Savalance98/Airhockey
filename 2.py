@@ -20,19 +20,12 @@ class Ball:
         self.ball_speed = 2
         self.ball_rect = int(self.ball_radius * 2 ** 0.5)
         self.ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, self.ball_rect, self.ball_rect)
-# def ball():
-#     ball_radius = 20
-#     ball_speed = 2
-#     ball_rect = int(ball_radius * 2 ** 0.5)
-#     ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
 dx, dy = 1, - 1
-
 def draw_f():
     pygame.draw.circle(sc, pygame.Color('red'), paddle.center, paddle_radius)
     pygame.draw.circle(sc, pygame.Color('white'), ball.center, ball_radius)
     pygame.draw.circle(sc, pygame.Color('blue'), paddle2.center, paddle2_radius)
-score_1 = 0
-score_2 = 0
+
 
 def pole():
     colour = "WHITE"
@@ -80,22 +73,27 @@ ball_radius = 20
 ball_speed = 2
 ball_rect = int(ball_radius * 2 ** 0.5)
 ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
+def over():
+    ball_speed = 0
+    while True:
+        render_end = f.render('GAME OVER', 1, pygame.Color('red'))
+        sc.blit(render_end, (100, 100))
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            else:
+                key = pygame.key.get_pressed()
+                if key[pygame.K_e]:
+                    return 1
+
 
 def ball_koord(dx,dy):
     if ball.centerx < ball_radius or ball.centerx > WIDTH - ball_radius:
         dx = -dx
     if ball.centery < ball_radius or ball.centery > HEIGHT - ball_radius:
         if ball.centerx > 230 and ball.centerx < 430:
-            ball_speed = 0
-            while True:
-                render_end =  f.render('GAME OVER', 1, pygame.Color('red'))
-                sc.blit(render_end, (100, 100))
-                pygame.display.flip()
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        exit()
-                    else:
-                        pygame.draw.circle(sc, pygame.Color('white'), ball.center, ball_radius)
+            return over()
         else:
             dy = -dy
     if ball.colliderect(paddle):
@@ -132,7 +130,7 @@ class Button:
             pygame.draw.rect(display,(23,204,58), (x,y,self.w,self.h))
             if cl [0] == 1:
                 clock.tick(60)
-                start_g()
+                start_g(1)
         else:
             pygame.draw.rect(display, (13, 162, 58), (x, y, self.w, self.h))
         print_text(mess,x + 10, y + 10, font_size=font_size)
@@ -152,17 +150,12 @@ def show_menu():
             if event.type == pygame.QUIT:
                 exit()
             display.blit(menu_b, (0,0))
-            start_b.draw(300,200,'Start',strat_g1())
+            start_b.draw(300,200,'Start')
             pygame.display.update()
             clock.tick(60)
-
-def strat_g1(k= 0):
-    if k == 1:
-        print(112312312)
-
-def start_g():
-    global dx,dy
-    while True:
+def start_g(t):
+    global dx,dy,ball
+    while t:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -172,9 +165,15 @@ def start_g():
         ball.x += ball_speed * dx
         ball.y += ball_speed * dy
         pygame.display.flip()
-        dx, dy = ball_koord(dx, dy)
+        x = ball_koord(dx, dy)
+        if x != 1:
+            dx = x[0]
+            dy = x[1]
+        else:
+            dx, dy = 1, - 1
+            ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
+            start_g(1)
         pygame.display.flip()
-
         key = pygame.key.get_pressed()
         if key[pygame.K_UP] and paddle.y > 35 and paddle.y + paddle_radius // 2 > HEIGHT // 2:
             paddle.y -= paddle_speed
@@ -202,6 +201,8 @@ sc = pygame.display.set_mode((WIDTH, HEIGHT))
 display = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 f = pygame.font.SysFont('Arial', 26)
+score_1 = 0
+score_2 = 0
 show_menu()
 
 
