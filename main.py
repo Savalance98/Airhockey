@@ -3,16 +3,15 @@ import random
 
 def draw_f():
     '''
-    :return: отрисовывает 2-х игроков и шайбу
+    отрисовывает 2-х игроков и шайбу
     '''
     pygame.draw.circle(sc, pygame.Color('red'), paddle.center, paddle_radius)
     pygame.draw.circle(sc, pygame.Color('white'), ball.center, ball_radius)
     pygame.draw.circle(sc, pygame.Color('blue'), paddle2.center, paddle2_radius)
 def pole(colour):
     '''
-
+    рисует линии полей на поле
     :param colour: цвет
-    :return: линии полей на поле
     '''
     pygame.draw.lines(sc, colour, True,
                       [[0, 0],
@@ -39,11 +38,18 @@ def pole(colour):
 def position(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t):
     # print(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t)
     '''
+    коэффиценты dx,dy после ударения с объектом
     :param dx: коэффицент x
     :param dy: коэффицент y
-    :param ball: мяч
-    :param rect: объект
-    :return: коэффиценты dx,dy после ударения с объектом
+    :param b_r: координата правой стороны шайбы
+    :param b_l: координата левой стороны шайбы
+    :param r_r: координата правой стороны объекта
+    :param r_l: координата левой стороны объекта
+    :param b_t: координата верхней стороны шайбы
+    :param b_b: координата нижней стороны шайбы
+    :param r_b: координата нижней стороны объекта
+    :param r_t: координата верхней стороны объекта
+    :return: коэффицент x, коэффицент y
     '''
     if dx > 0:
         delta_x = b_r - r_l
@@ -65,8 +71,8 @@ def position(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t):
 
 def over(k):
     '''
+    если счёт одного игрока больше 6, то программа закрывается, иначе, начинается новая игра с поменявшимся счётом
     :param k: координаты шайбы
-    :return: если счёт одного игрока больше 6, то программа закрывается, иначе, начинается новая игра с поменявшимся счётом
     '''
     global score_1, score_2
     while True:
@@ -88,6 +94,7 @@ def over(k):
                 return 1
 def ball_koord(dx,dy):
     '''
+    считает коэффиценты dX,dY после прикосновения с стенами
     :param dx: коэффицент x
     :param dy: коэффицент y
     :return: коэффиценты X,Y после прикосновения с стенами
@@ -113,13 +120,13 @@ class Button:
         self.ac = (13, 162, 58)
     def draw(self,x,y,mess,display, font_size = 30):
         '''
-
+        делает нарисованную кнопку с распознаванием нажатия на неё, и дальнейшей программой
         :param x: длина
         :param y: высота
         :param mess: Сообщение на кнопке
         :param action: функция
         :param font_size: шрифт
-        :return: нарисованную кнопку с распознаванием нажатия на неё, и дальнейшей программой
+        :param display: дисплей
         '''
         mo = pygame.mouse.get_pos()
         cl = pygame.mouse.get_pressed()
@@ -135,20 +142,21 @@ class Button:
         print_text(mess,x + 10, y + 10, font_size=font_size,display=display)
 def print_text(mess,x,y,font_c=(0,0,0), font_type='PingPong.ttf', font_size = 30,display=None):
     '''
+    делает нарисованный текст на кнопке
     :param mess: Сообщение на кнопке
     :param x: координата
     :param y: координата
     :param font_c: цвет
     :param font_type: шрифт
     :param font_size: размер
-    :return: нарисованную кнопку
+    :param display: дисплей
     '''
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(mess, True,font_c)
     display.blit(text, (x,y))
 def show_menu(display):
     '''
-    :return: при включении программы появляется окно меню, в котором можно начать игру или выйти
+    при включении программы появляется окно меню, в котором можно начать игру или выйти
     '''
     menu_b = pygame.image.load('image123.png')
     show = True
@@ -165,9 +173,8 @@ def show_menu(display):
             clock.tick(60)
 def start_g(t):
     '''
-
+    основной цикл игры
     :param t: параметр для действия игры
-    :return: действие игры
     '''
     global dx,dy,ball,score_1,score_2,paddle2,paddle
     colour = random.choice(['RED', 'BLUE', 'WHITE', 'YELLOW',(255,70,9)])
@@ -219,6 +226,9 @@ def start_g(t):
         clock.tick(fps)
 
 def main1():
+    '''
+    запускает функцию с кодом жизни
+    '''
     f = pygame.font.SysFont('Arial', 26)
     show_menu(display)
 
