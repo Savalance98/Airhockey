@@ -98,10 +98,15 @@ def over(k):
                 return 1
 def ball_koord(dx,dy,b_cx,b_ra,WIDTH,b_cy,HEIGHT):
     '''
-    считает коэффиценты dX,dY после прикосновения с стенами
+
     :param dx: коэффицент x
     :param dy: коэффицент y
-    :return: коэффиценты X,Y после прикосновения с стенами
+    :param b_cx: координата центара шайбы по X
+    :param b_ra: радиус шайбы
+    :param WIDTH: Ширина
+    :param b_cy: координата центара шайбы по
+    :param HEIGHT: Высота
+    :return:
     '''
     if b_cx < b_ra or b_cx > WIDTH - b_ra:
         dx = -dx
