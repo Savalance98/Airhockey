@@ -155,7 +155,7 @@ class Button:
         else:
             pygame.draw.rect(display, (13, 162, 58), (x, y, self.w, self.h))
         print_text(mess,x + 10, y + 10, font_size=font_size)
-def print_text(mess,x,y,font_c=(0,0,0), font_type='impact2.ttf', font_size = 30):
+def print_text(mess,x,y,font_c=(0,0,0), font_type='PingPong.ttf', font_size = 30):
     '''
 
     :param mess: Сообщение на кнопке
@@ -174,7 +174,7 @@ def show_menu():
 
     :return: при включении программы появляется окно меню, в котором можно начать игру или выйти
     '''
-    menu_b = pygame.image.load('1.jpg')
+    menu_b = pygame.image.load('image123.png')
     show = True
     start_b = Button(100, 70)
     plae = Button(100,70)
