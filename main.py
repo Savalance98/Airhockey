@@ -58,6 +58,7 @@ def position(dx, dy,ball,rect):
     :param rect: объект
     :return: коэффиценты dx,dy после ударения с объектом
     '''
+    print(dx,dy)
     if dx > 0:
         delta_x = ball.right - rect.left
     else:
@@ -73,7 +74,9 @@ def position(dx, dy,ball,rect):
         dy = -dy
     elif delta_y > delta_x:
         dx = -dx
+    print(dx,dy, ball,rect)
     return dx,dy
+
 ball_radius = 20
 ball_speed = 2
 ball_rect = int(ball_radius * 2 ** 0.5)
