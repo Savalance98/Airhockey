@@ -36,24 +36,23 @@ def pole(colour):
                       [[0, 442],
                        [660, 442]], 5)
     pygame.draw.circle(sc, colour, [330, 442], 50, 5)
-def position(dx, dy,ball,rect):
+def position(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t):
+    # print(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t)
     '''
-
     :param dx: коэффицент x
     :param dy: коэффицент y
     :param ball: мяч
     :param rect: объект
     :return: коэффиценты dx,dy после ударения с объектом
     '''
-    print(dx,dy)
     if dx > 0:
-        delta_x = ball.right - rect.left
+        delta_x = b_r - r_l
     else:
-        delta_x = rect.right - ball.left
+        delta_x = r_r - b_l
     if dy > 0:
-        delta_y = ball.bottom - rect.top
+        delta_y = b_b - r_t
     else:
-        delta_y = rect.bottom - ball.top
+        delta_y = r_b - b_t
     if abs(delta_x - delta_y) < 10:
         dx = -dx
         dy = -dy
@@ -61,12 +60,11 @@ def position(dx, dy,ball,rect):
         dy = -dy
     elif delta_y > delta_x:
         dx = -dx
-    print(dx,dy, ball,rect)
+    # print(dx,dy)
     return dx,dy
 
 def over(k):
     '''
-
     :param k: координаты шайбы
     :return: если счёт одного игрока больше 6, то программа закрывается, иначе, начинается новая игра с поменявшимся счётом
     '''
@@ -102,9 +100,9 @@ def ball_koord(dx,dy):
         else:
             dy = -dy
     if ball.colliderect(paddle):
-        dx, dy = position(dx, dy, ball, paddle)
+        dx, dy = position(dx, dy, ball.right,ball.left, paddle.right, paddle.left,ball.top,ball.bottom,paddle.bottom,paddle.top)
     if ball.colliderect(paddle2):
-        dx, dy = position(dx, dy, ball, paddle2)
+        dx, dy = position(dx, dy, ball.right,ball.left, paddle2.right, paddle2.left,ball.top,ball.bottom,paddle2.bottom,paddle2.top)
     return dx,dy
 
 class Button:
@@ -222,7 +220,6 @@ def start_g(t):
 
 def main1():
     f = pygame.font.SysFont('Arial', 26)
-
     show_menu(display)
 
 if __name__ == '__main__':
