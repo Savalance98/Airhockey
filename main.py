@@ -80,7 +80,7 @@ def over(k):
     '''
     global score_1, score_2
     while True:
-        if score_2 >= 6 or score_1 >= 6:
+        if score_2 > 6 or score_1 > 6:
             render_end = f.render('GAME OVER', 1, pygame.Color('red'))
             sc.blit(render_end, (100, 100))
             pygame.display.flip()
