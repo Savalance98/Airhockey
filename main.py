@@ -98,7 +98,7 @@ def over(k):
                 return 1
 def ball_koord(dx,dy,b_cx,b_ra,WIDTH,b_cy,HEIGHT):
     '''
-
+    высчитывает коэффиценты при соударении со стенами
     :param dx: коэффицент x
     :param dy: коэффицент y
     :param b_cx: координата центара шайбы по X
@@ -106,7 +106,7 @@ def ball_koord(dx,dy,b_cx,b_ra,WIDTH,b_cy,HEIGHT):
     :param WIDTH: Ширина
     :param b_cy: координата центара шайбы по
     :param HEIGHT: Высота
-    :return:
+    :return: коэффиценты X,Y
     '''
     if b_cx < b_ra or b_cx > WIDTH - b_ra:
         dx = -dx
@@ -119,6 +119,9 @@ def ball_koord(dx,dy,b_cx,b_ra,WIDTH,b_cy,HEIGHT):
     return dx, dy
 
 def ball_koord2():
+    '''
+    высчитывает коэффиценты при соударении с игроками
+    '''
     global dx,dy
     if ball.colliderect(player):
         dx, dy = position(dx, dy, ball.right,ball.left, player.right, player.left,ball.top,ball.bottom,player.bottom,player.top)
