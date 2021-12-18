@@ -133,7 +133,7 @@ class Button:
         self.h = h
         self.ina = (23,204,58)
         self.ac = (13, 162, 58)
-    def draw(self,x,y,mess,action = None, font_size = 30):
+    def draw(self,x,y,mess,display, font_size = 30):
         '''
 
         :param x: длина
@@ -154,10 +154,9 @@ class Button:
                 exit()
         else:
             pygame.draw.rect(display, (13, 162, 58), (x, y, self.w, self.h))
-        print_text(mess,x + 10, y + 10, font_size=font_size)
-def print_text(mess,x,y,font_c=(0,0,0), font_type='PingPong.ttf', font_size = 30):
+        print_text(mess,x + 10, y + 10, font_size=font_size,display=display)
+def print_text(mess,x,y,font_c=(0,0,0), font_type='PingPong.ttf', font_size = 30,display=None):
     '''
-
     :param mess: Сообщение на кнопке
     :param x: координата
     :param y: координата
@@ -169,9 +168,8 @@ def print_text(mess,x,y,font_c=(0,0,0), font_type='PingPong.ttf', font_size = 30
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(mess, True,font_c)
     display.blit(text, (x,y))
-def show_menu():
+def show_menu(display):
     '''
-
     :return: при включении программы появляется окно меню, в котором можно начать игру или выйти
     '''
     menu_b = pygame.image.load('image123.png')
@@ -183,8 +181,8 @@ def show_menu():
             if event.type == pygame.QUIT:
                 exit()
             display.blit(menu_b, (0,0))
-            start_b.draw(WIDTH // 2,HEIGHT // 2 - 100,'Start')
-            plae.draw(WIDTH // 2,HEIGHT // 2 + 100,'Quit')
+            start_b.draw(WIDTH // 2,HEIGHT // 2 - 100,'Start',display)
+            plae.draw(WIDTH // 2,HEIGHT // 2 + 100,'Quit',display)
             pygame.display.update()
             clock.tick(60)
 def start_g(t):
@@ -241,11 +239,17 @@ def start_g(t):
             paddle2.right += paddle2_speed
         pygame.display.flip()
         clock.tick(fps)
-pygame.init()
-sc = pygame.display.set_mode((WIDTH, HEIGHT))
-display = pygame.display.set_mode((WIDTH, HEIGHT))
-clock = pygame.time.Clock()
-f = pygame.font.SysFont('Arial', 26)
-score_1 = 0
-score_2 = 0
-show_menu()
+
+def main1():
+    f = pygame.font.SysFont('Arial', 26)
+
+    show_menu(display)
+
+if __name__ == '__main__':
+    pygame.init()
+    sc = pygame.display.set_mode((WIDTH, HEIGHT))
+    display = pygame.display.set_mode((WIDTH, HEIGHT))
+    clock = pygame.time.Clock()
+    score_1 = 0
+    score_2 = 0
+    main1()
