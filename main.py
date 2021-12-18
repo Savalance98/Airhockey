@@ -9,9 +9,9 @@ def draw_f():
     '''
     отрисовывает 2-х игроков и шайбу
     '''
-    pygame.draw.circle(sc, pygame.Color('red'), paddle.center, paddle_radius)
+    pygame.draw.circle(sc, pygame.Color('red'), player.center, player_radius)
     pygame.draw.circle(sc, pygame.Color('white'), ball.center, ball_radius)
-    pygame.draw.circle(sc, pygame.Color('blue'), paddle2.center, paddle2_radius)
+    pygame.draw.circle(sc, pygame.Color('blue'), player2.center, player2_radius)
 def pole(colour):
     '''
     рисует линии полей на поле
@@ -40,7 +40,7 @@ def pole(colour):
                        [660, 442]], 5)
     pygame.draw.circle(sc, colour, [330, 442], 50, 5)
 def position(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t):
-    # print(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t)
+
     '''
     коэффиценты dx,dy после ударения с объектом
     :param dx: коэффицент x
@@ -70,7 +70,7 @@ def position(dx, dy,b_r,b_l,r_r,r_l,b_t,b_b,r_b,r_t):
         dy = -dy
     elif delta_y > delta_x:
         dx = -dx
-    # print(dx,dy)
+
     return dx,dy
 
 def over(k):
@@ -110,10 +110,10 @@ def ball_koord(dx,dy):
             return over(ball.centery)
         else:
             dy = -dy
-    if ball.colliderect(paddle):
-        dx, dy = position(dx, dy, ball.right,ball.left, paddle.right, paddle.left,ball.top,ball.bottom,paddle.bottom,paddle.top)
-    if ball.colliderect(paddle2):
-        dx, dy = position(dx, dy, ball.right,ball.left, paddle2.right, paddle2.left,ball.top,ball.bottom,paddle2.bottom,paddle2.top)
+    if ball.colliderect(player):
+        dx, dy = position(dx, dy, ball.right,ball.left, player.right, player.left,ball.top,ball.bottom,player.bottom,player.top)
+    if ball.colliderect(player2):
+        dx, dy = position(dx, dy, ball.right,ball.left, player2.right, player2.left,ball.top,ball.bottom,player2.bottom,player2.top)
     return dx,dy
 
 class Button:
@@ -180,7 +180,7 @@ def start_g(t):
     основной цикл игры
     :param t: параметр для действия игры
     '''
-    global dx,dy,ball,score_1,score_2,paddle2,paddle
+    global dx,dy,ball,score_1,score_2,player2,player
     colour = random.choice(['RED', 'BLUE', 'WHITE', 'YELLOW',(255,70,9)])
     while t:
         for event in pygame.event.get():
@@ -205,27 +205,27 @@ def start_g(t):
                 dx, dy = -1, 1
             ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
             score_1, score_2 = score_1,score_2
-            paddle2 = pygame.Rect(330, 10, paddle2_rect, paddle2_rect)
-            paddle = pygame.Rect(330, 813, paddle_rect, paddle_rect)
+            player2 = pygame.Rect(330, 10, player2_rect, player2_rect)
+            player = pygame.Rect(330, 813, player_rect, player_rect)
             start_g(1)
         pygame.display.flip()
         key = pygame.key.get_pressed()
-        if key[pygame.K_UP] and paddle.y > 35 and paddle.y + paddle_radius // 2 > HEIGHT // 2:
-            paddle.y -= paddle_speed
-        if key[pygame.K_DOWN] and paddle.y < HEIGHT - paddle_h * 2 - 10:
-            paddle.y += paddle_speed
-        if key[pygame.K_LEFT] and paddle.left > 0:
-            paddle.left -= paddle_speed
-        if key[pygame.K_RIGHT] and paddle.right < WIDTH:
-            paddle.right += paddle_speed
-        if key[pygame.K_w] and paddle2.y > 30:
-            paddle2.y -= paddle2_speed
-        if key[pygame.K_s] and paddle2.y >= 0 and paddle2.centery < HEIGHT // 2:
-            paddle2.y += paddle2_speed
-        if key[pygame.K_a] and paddle2.left > 0:
-            paddle2.left -= paddle2_speed
-        if key[pygame.K_d] and paddle2.right < WIDTH:
-            paddle2.right += paddle2_speed
+        if key[pygame.K_UP] and player.y > 35 and player.y + player_radius // 2 > HEIGHT // 2:
+            player.y -= player_speed
+        if key[pygame.K_DOWN] and player.y < HEIGHT - player_h * 2 - 10:
+            player.y += player_speed
+        if key[pygame.K_LEFT] and player.left > 0:
+            player.left -= player_speed
+        if key[pygame.K_RIGHT] and player.right < WIDTH:
+            player.right += player_speed
+        if key[pygame.K_w] and player2.y > 30:
+            player2.y -= player2_speed
+        if key[pygame.K_s] and player2.y >= 0 and player2.centery < HEIGHT // 2:
+            player2.y += player2_speed
+        if key[pygame.K_a] and player2.left > 0:
+            player2.left -= player2_speed
+        if key[pygame.K_d] and player2.right < WIDTH:
+            player2.right += player2_speed
         pygame.display.flip()
         clock.tick(fps)
 
@@ -240,17 +240,17 @@ if __name__ == '__main__':
     pygame.init()
     WIDTH, HEIGHT = 660, 883
     fps = 60
-    paddle_w = 330
-    paddle_h = 35
-    paddle_speed = 15
-    paddle_radius = 40
-    paddle_speed = 15
-    paddle_rect = int(paddle_radius * 2 ** 0.5)
-    paddle = pygame.Rect(330, 813, paddle_rect, paddle_rect)
-    paddle2_radius = 40
-    paddle2_speed = 15
-    paddle2_rect = int(paddle2_radius * 2 ** 0.5)
-    paddle2 = pygame.Rect(330, 10, paddle2_rect, paddle2_rect)
+    player_w = 330
+    player_h = 35
+    player_speed = 15
+    player_radius = 40
+    player_speed = 15
+    player_rect = int(player_radius * 2 ** 0.5)
+    player = pygame.Rect(330, 813, player_rect, player_rect)
+    player2_radius = 40
+    player2_speed = 15
+    player2_rect = int(player2_radius * 2 ** 0.5)
+    player2 = pygame.Rect(330, 10, player2_rect, player2_rect)
     dx, dy = 1, - 1
     f = pygame.font.SysFont('Arial', 26)
     sc = pygame.display.set_mode((WIDTH, HEIGHT))
