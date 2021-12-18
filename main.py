@@ -130,6 +130,9 @@ def ball_koord2():
 
 
 class Button:
+    '''
+    класс кнопка, генерирует кнопку
+    '''
     def __init__(self,w,h):
         self.w = w
         self.h = h
