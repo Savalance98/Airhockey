@@ -96,25 +96,30 @@ def over(k):
                 else:
                     score_2 += 1
                 return 1
-def ball_koord(dx,dy):
+def ball_koord(dx,dy,b_cx,b_ra,WIDTH,b_cy,HEIGHT):
     '''
     считает коэффиценты dX,dY после прикосновения с стенами
     :param dx: коэффицент x
     :param dy: коэффицент y
     :return: коэффиценты X,Y после прикосновения с стенами
     '''
-    if ball.centerx < ball_radius or ball.centerx > WIDTH - ball_radius:
+    if b_cx < b_ra or b_cx > WIDTH - b_ra:
         dx = -dx
-    if ball.centery < ball_radius or ball.centery > HEIGHT - ball_radius:
-        if ball.centerx > 230 and ball.centerx < 430:
-            return over(ball.centery)
+
+    if b_cy < b_ra or b_cy > HEIGHT - b_ra:
+        if b_cx > 230 and b_cx < 430:
+            return over(b_cy)
         else:
             dy = -dy
+    return dx, dy
+
+def ball_koord2():
+    global dx,dy
     if ball.colliderect(player):
         dx, dy = position(dx, dy, ball.right,ball.left, player.right, player.left,ball.top,ball.bottom,player.bottom,player.top)
     if ball.colliderect(player2):
         dx, dy = position(dx, dy, ball.right,ball.left, player2.right, player2.left,ball.top,ball.bottom,player2.bottom,player2.top)
-    return dx,dy
+
 
 class Button:
     def __init__(self,w,h):
@@ -180,7 +185,7 @@ def start_g(t):
     основной цикл игры
     :param t: параметр для действия игры
     '''
-    global dx,dy,ball,score_1,score_2,player2,player
+    global dx,dy,ball,score_1,score_2,player2,player,WIDTH,HEIGHT
     colour = random.choice(['RED', 'BLUE', 'WHITE', 'YELLOW',(255,70,9)])
     while t:
         for event in pygame.event.get():
@@ -194,7 +199,8 @@ def start_g(t):
         ball.x += ball_speed * dx
         ball.y += ball_speed * dy
         pygame.display.flip()
-        x = ball_koord(dx, dy)
+        ball_koord2()
+        x = ball_koord(dx,dy,ball.centerx,ball_radius,WIDTH,ball.centery,HEIGHT)
         if x != 1:
             dx = x[0]
             dy = x[1]
