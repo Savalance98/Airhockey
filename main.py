@@ -1,19 +1,6 @@
 import pygame
 import random
-WIDTH, HEIGHT = 660, 883
-fps = 60
-paddle_w = 330
-paddle_h = 35
-paddle_speed = 15
-paddle_radius = 40
-paddle_speed = 15
-paddle_rect = int(paddle_radius * 2 ** 0.5)
-paddle = pygame.Rect(330, 813, paddle_rect, paddle_rect)
-paddle2_radius = 40
-paddle2_speed = 15
-paddle2_rect = int(paddle2_radius * 2 ** 0.5)
-paddle2 = pygame.Rect(330, 10, paddle2_rect, paddle2_rect)
-dx, dy = 1, - 1
+
 def draw_f():
     '''
     :return: отрисовывает 2-х игроков и шайбу
@@ -77,10 +64,6 @@ def position(dx, dy,ball,rect):
     print(dx,dy, ball,rect)
     return dx,dy
 
-ball_radius = 20
-ball_speed = 2
-ball_rect = int(ball_radius * 2 ** 0.5)
-ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
 def over(k):
     '''
 
@@ -123,10 +106,7 @@ def ball_koord(dx,dy):
     if ball.colliderect(paddle2):
         dx, dy = position(dx, dy, ball, paddle2)
     return dx,dy
-pygame.init()
-sc = pygame.display.set_mode((WIDTH, HEIGHT))
-clock = pygame.time.Clock()
-f = pygame.font.SysFont('Arial', 26)
+
 class Button:
     def __init__(self,w,h):
         self.w = w
@@ -247,9 +227,28 @@ def main1():
 
 if __name__ == '__main__':
     pygame.init()
+    WIDTH, HEIGHT = 660, 883
+    fps = 60
+    paddle_w = 330
+    paddle_h = 35
+    paddle_speed = 15
+    paddle_radius = 40
+    paddle_speed = 15
+    paddle_rect = int(paddle_radius * 2 ** 0.5)
+    paddle = pygame.Rect(330, 813, paddle_rect, paddle_rect)
+    paddle2_radius = 40
+    paddle2_speed = 15
+    paddle2_rect = int(paddle2_radius * 2 ** 0.5)
+    paddle2 = pygame.Rect(330, 10, paddle2_rect, paddle2_rect)
+    dx, dy = 1, - 1
+    f = pygame.font.SysFont('Arial', 26)
     sc = pygame.display.set_mode((WIDTH, HEIGHT))
     display = pygame.display.set_mode((WIDTH, HEIGHT))
     clock = pygame.time.Clock()
     score_1 = 0
     score_2 = 0
+    ball_radius = 20
+    ball_speed = 2
+    ball_rect = int(ball_radius * 2 ** 0.5)
+    ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
     main1()
