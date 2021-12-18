@@ -258,11 +258,11 @@ if __name__ == '__main__':
     player_h = 35
     player_speed = 15
     player_radius = 40
-    player_speed = 15
+    player_speed = 10
     player_rect = int(player_radius * 2 ** 0.5)
     player = pygame.Rect(330, 813, player_rect, player_rect)
     player2_radius = 40
-    player2_speed = 15
+    player2_speed = 10
     player2_rect = int(player2_radius * 2 ** 0.5)
     player2 = pygame.Rect(330, 10, player2_rect, player2_rect)
     dx, dy = 1, - 1
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     score_1 = 0
     score_2 = 0
     ball_radius = 20
-    ball_speed = 2
+    ball_speed = 6
     ball_rect = int(ball_radius * 2 ** 0.5)
     ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, ball_rect, ball_rect)
     main1()
